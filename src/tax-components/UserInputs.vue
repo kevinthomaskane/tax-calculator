@@ -10,8 +10,8 @@
             id="gross-income-input"
             @input="handleGrossIncomeInput"
             type="text"
-            :placeholder="taxGrossIncome === -1 ? 50000 : ''"
-            :value="taxGrossIncome === -1 ? '' : taxGrossIncome"
+            :placeholder="income === -1 ? 50000 : ''"
+            :value="income === -1 ? '' : income"
           />
         </div>
         <div class="basis-selection-wrapper">
@@ -27,7 +27,12 @@
           </select>
         </div>
       </div>
-      <div class="calculate-button">Calculate</div>
+      <div
+        class="calculate-button"
+        @click="handleCalculate"
+      >
+        Calculate
+      </div>
     </div> 
   </div>
 </template>
@@ -38,14 +43,32 @@ import { PAY_BASIS_OPTIONS } from './../constants/tax-calculator/constants'
 export default {
   name: 'UserInputs',
   data: () => ({
-    PAY_BASIS_OPTIONS
+    PAY_BASIS_OPTIONS,
+    income: -1,
+    payBasis: ''
   }),
   methods: {
+    /**
+     * Handles gross income input
+     */
     handleGrossIncomeInput (e) {
-      this.$store.dispatch('setTaxGrossIncome', parseInt(e.target.value))
+      this.income = e.target.value
     },
+    /**
+     * Handles pay basis selection
+     */
     handlePayBasis (e) {
-      this.$store.dispatch('setTaxPayBasis', e.target.value.toLowerCase())
+      this.payBasis = e.target.value.toLowerCase()
+    },
+    /**
+     * Removes all non-digits from input and sets income and payBasis to store
+     */
+    handleCalculate () {
+      const sanitized = this.income.replace(/\D/g, '')
+      this.income = parseInt(sanitized)
+
+      this.$store.dispatch('setTaxGrossIncome', this.income)
+      this.$store.dispatch('setTaxPayBasis', this.payBasis)
     }
   },
   computed: {
@@ -60,6 +83,7 @@ export default {
 @import './../variables.scss';
 
 .user-inputs-wrapper {
+  margin-bottom: 2rem;
   .container {
     background: white;
     padding: 1.5rem 3rem;
@@ -68,7 +92,7 @@ export default {
     display: inline-block;
     .instructions {
       color: $color-grey;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
     .inputs-wrapper {
       display: flex;
@@ -81,22 +105,23 @@ export default {
         display: block;
       }
       select {
-        height: 2rem;
+        height: 2.5rem;
         border: none;
         outline: none;
         background: $color-light-grey;
         padding: .5rem;
         color: $color-dark-grey;
+        border-radius: 4px;
       }
       input {
         border-radius: 4px;
         border: none;
         outline: none;
+        color: $color-dark-grey;
         background: $color-light-grey;
         padding: .5rem;
-        color: black;
         width: 100%;
-        height: 2rem;
+        height: 2.5rem;
       }
       .gross-income-wrapper {
         margin-right: 2rem;
@@ -109,6 +134,11 @@ export default {
       background: $color-dark-blue;
       border-radius: 4px;
       color: white;
+      cursor: pointer;
+      transition: background .2s ease-in-out;
+      &:hover {
+        background: $color-darker-blue;
+      }
     }
   }
 }

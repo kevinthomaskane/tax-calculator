@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    country: 'US', /* either US or UK for pocketpence */
     calculatorType: 'tax', /* type of calculator to display */
     taxGrossIncome: -1, /* user-inputed gross income for tax calculator */
     taxPayBasis: '' /* user-inputed pay basiss for tax calculator */
@@ -21,11 +22,10 @@ export default new Vuex.Store({
       state.calculatorType = type
     },
     setTaxGrossIncome (state, income) {
-      console.log(income)
-      state.setTaxGrossIncome = income  
+      state.taxGrossIncome = income  
     },
     setTaxPayBasis (state, basis) {
-      state.setTaxPayBasis = basis  
+      state.taxPayBasis = basis  
     }
     // setCurrentView (state, view) {
     //   state.currentView = view
