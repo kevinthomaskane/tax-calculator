@@ -14,7 +14,8 @@ export default new Vuex.Store({
   getters: {
     calculatorType: state => state.calculatorType,
     taxGrossIncome: state => state.taxGrossIncome,
-    taxPayBasis: state => state.taxPayBasis
+    taxPayBasis: state => state.taxPayBasis,
+    country: state => state.country
     // currentView: state => state.currentView,
   },
   mutations: {

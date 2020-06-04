@@ -1,7 +1,7 @@
 <template>
   <div class="user-inputs-wrapper">
     <div class="container">
-      <p class="instructions">Start by inserting your gross income, your pay basis, and your country</p>
+      <p class="instructions">Start by inserting your gross income, pay basis, filing status, and your state of residence</p>
       <div class="inputs-wrapper">
         <div class="gross-income-wrapper">
           <label for="gross-income-input">Gross Income</label>
@@ -26,6 +26,30 @@
             </option>
           </select>
         </div>
+        <div class="filing-status-selection-wrapper">
+          <label for="filing-status-select">Filing Status</label>
+          <select id="filing-status-select" name="filing status" @change="handleFilingStatus">
+            <option
+              v-for="(status, index) of Object.keys(FILING_ACRONYMS)"
+              :key="index" 
+              :value="status"
+            >
+              {{ FILING_ACRONYMS[status] }}
+            </option>
+          </select>
+        </div>
+        <div v-if="country === 'US'" class="state-selection-wrapper">
+          <label for="state-select">State of Residence</label>
+          <select id="state-select" name="state" @change="handleStateSelection">
+            <option
+              v-for="(state, index) of STATES"
+              :key="index" 
+              :value="state"
+            >
+              {{ state }}
+            </option>
+          </select>
+        </div>
       </div>
       <div
         class="calculate-button"
@@ -38,14 +62,18 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { PAY_BASIS_OPTIONS } from './../constants/tax-calculator/constants'
+import { PAY_BASIS_OPTIONS, FILING_ACRONYMS, STATES } from './../constants/tax-calculator/constants'
 
 export default {
   name: 'UserInputs',
   data: () => ({
     PAY_BASIS_OPTIONS,
-    income: -1,
-    payBasis: ''
+    FILING_ACRONYMS,
+    STATES,
+    income: '50000',
+    payBasis: 'yearly',
+    filingStatus: 'single',
+    state: 'Alabama'
   }),
   methods: {
     /**
@@ -61,6 +89,18 @@ export default {
       this.payBasis = e.target.value.toLowerCase()
     },
     /**
+     * Handles filing status selection
+     */
+    handleFilingStatus (e) {
+      this.filingStatus = e.target.value
+    },
+    /**
+     * Handles filing status selection
+     */
+    handleStateSelection (e) {
+      this.state = e.target.value
+    },
+    /**
      * Removes all non-digits from input and sets income and payBasis to store
      */
     handleCalculate () {
@@ -73,7 +113,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'taxGrossIncome'
+      'taxGrossIncome',
+      'country'
     ])
   }
 }
@@ -126,6 +167,12 @@ export default {
       .gross-income-wrapper {
         margin-right: 2rem;
         width: 250px;
+      }
+      .basis-selection-wrapper {
+        margin-right: 2rem;
+      }
+      .filing-status-selection-wrapper {
+        margin-right: 2rem;
       }
     }
     .calculate-button {

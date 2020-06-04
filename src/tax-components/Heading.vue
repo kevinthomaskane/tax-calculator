@@ -1,7 +1,7 @@
 <template>
   <div class="tax-heading-wrapper">
     <h1 class="header">Income Tax Calculator</h1>
-    <p class="sub-header">Calculate your final salary after taxes</p>
+    <p class="sub-header">Calculate your final income after taxes</p>
   </div>
 </template>
 <script>

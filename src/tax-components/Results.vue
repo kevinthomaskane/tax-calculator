@@ -37,7 +37,7 @@ export default {
   name: 'Results',
   data: () => ({
     PAY_BASIS_OPTIONS,
-    currencySymbol: country === 'US' ? '$' : '£'
+    currencySymbol: ''
   }),
   methods: {
     /**
@@ -54,7 +54,16 @@ export default {
       'taxGrossIncome',
       'taxPayBasis'
     ])
-  }
+  },
+  watch: {
+    country (val) {
+      if (val !== 'US') {
+        this.currencySymbol = '£'
+        return
+      }
+      this.currencySymbol = '$'
+    }
+  },
 }
 </script>
 <style lang="scss">
