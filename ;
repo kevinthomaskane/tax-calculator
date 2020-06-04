@@ -1,0 +1,64 @@
+const fs = require('fs');
+const Path = require('path');
+const cheerio = require('cheerio');
+const axios = require('axios');
+const states = require('./states');
+
+class Scraper {
+  constructor () {
+    this.states = states
+    this.currentState = ''
+    this.filingCategories = ['S', 'MFJ', 'MFS', 'HOH']
+    this.stateBrackets = {}
+    this.currentIndex = 0
+    this.tableParentSelector = "div[id^='tab-state-income-tax-brackets'] tbody"
+    this.tableParentSelectorFallback = "div[id^='tab-income-tax-brackets'] tbody"
+    this.tables = []
+    this.rows = []
+    this.$ = null
+  }
+
+  requestDocument () {
+    const baseURL = `https://smartasset.com/taxes/${this.currentState}-paycheck-calculator`
+
+    axios.get(baseURL)
+      .then(response => {
+        this.$ = cheerio.load(response.data)
+
+        this.tables = this.$(this.tableParentSelector)
+
+        if (this.tables.length === 0) {
+          this.tables = this.$(this.tableParentSelectorFallback) 
+        }
+
+        this.scrapeTables()
+      })
+  }
+
+  scrapeTables () {
+    const _this = this
+    this.rows = this.tables.map(function(i, table) {
+      return _this.$(table).find('tr')
+    })
+    console.log(this.rows)
+  }
+
+  // scrapeRows () {
+  //   const _this = this
+  //   this.rows.each(function(i, row) {
+  //     console.log(_this.$(row).contents())
+  //   })
+  // }
+
+  setCurrentState () {
+    this.currentState = this.states[this.currentIndex]
+  }
+
+  init () {
+    this.setCurrentState()
+    this.requestDocument()
+  }
+}
+
+const stateIncomeTaxScraper = new Scraper()
+stateIncomeTaxScraper.init()

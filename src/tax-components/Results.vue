@@ -14,6 +14,18 @@
           </p>
         </div>
       </div>
+      <div class="breakdown-wrapper">
+        <div class="income-breakdown">
+          <div class="salary wrapper">
+            <p>Salary</p>
+            <p>{{ currencySymbol + taxGrossIncome }}</p>
+          </div>
+          <div class="income-tax wrapper">
+            <p>Salary</p>
+            <p>{{ currencySymbol + taxGrossIncome }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -24,7 +36,8 @@ import { PAY_BASIS_OPTIONS } from './../constants/tax-calculator/constants'
 export default {
   name: 'Results',
   data: () => ({
-    PAY_BASIS_OPTIONS
+    PAY_BASIS_OPTIONS,
+    currencySymbol: country === 'US' ? '$' : '£'
   }),
   methods: {
     /**
@@ -37,6 +50,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'country',
       'taxGrossIncome',
       'taxPayBasis'
     ])
