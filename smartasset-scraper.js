@@ -20,10 +20,10 @@ class Scraper {
     this.$ = null
   }
 
-  requestDocument () {
+  async requestDocument () {
     const baseURL = `https://smartasset.com/taxes/${this.currentState}-paycheck-calculator`
 
-    axios.get(baseURL)
+    await axios.get(baseURL)
       .then(response => {
         this.$ = cheerio.load(response.data)
 
@@ -35,6 +35,7 @@ class Scraper {
 
         this.scrapeTables()
       })
+    this.next()
   }
 
   scrapeTables () {
@@ -84,7 +85,6 @@ class Scraper {
       })
     })
     STATE_TAX_BRACKETS[this.currentState] = this.stateBrackets
-    this.next()
   }
 
   next () {
@@ -94,7 +94,8 @@ class Scraper {
       const stringified = JSON.stringify(STATE_TAX_BRACKETS)
       fs.writeFile('state-tax-brackets.js', stringified, function () {})
     } else {
-      this.currentState = this.states[this.currentIndex]
+      this.stateBrackets = {}
+      this.setCurrentState()
       this.requestDocument()
     }
 
