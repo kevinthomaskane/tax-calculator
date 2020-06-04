@@ -1,4 +1,4 @@
-const stateTaxBrackets = {
+const STATE_TAX_BRACKETS = {
   Alabama: {
     'tier-1': {
       S: { min: 0, max: 500 },
