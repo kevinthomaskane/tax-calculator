@@ -1,15 +1,9 @@
 const states = {
   Alabama: {
     'tier-1': {
-      S: {
-        min: 0,
-        max: 11760,
-      },
+      S: { min: 0, max: 11760 },
       rate: 0.03,
-      MFJ: {
-        min: 0,
-        max: 15680,
-      },
+      MFJ: { min: 0, max: 15680 },
       MFS: { min: 0, max: 7840 },
       HOH: { min: 0, max: 11760 },
     },

@@ -88,13 +88,16 @@ class Scraper {
   }
 
   next () {
-    if (this.currentIndex === this.states.length - 1) {
+    this.currentIndex += 1
+
+    if (this.currentIndex === this.states.length) {
       const stringified = JSON.stringify(STATE_TAX_BRACKETS)
       fs.writeFile('state-tax-brackets.js', stringified, function () {})
+    } else {
+      this.currentState = this.states[this.currentIndex]
+      this.requestDocument()
     }
-    this.currentIndex += 1
-    this.currentState = this.states[this.currentIndex]
-    this.requestDocument()
+
   }
 
   setCurrentState () {
