@@ -14,7 +14,6 @@ export default {
 
 .tax-heading-wrapper {
   color: white;
-  text-shadow: 0 1px 1px black;
   margin-bottom: 3rem;
   .header {
     font-size: 3rem;

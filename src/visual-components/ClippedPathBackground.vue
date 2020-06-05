@@ -3,8 +3,8 @@
     <svg width="101px" viewBox="0 0 101 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>
         <linearGradient x1="0%" y1="0%" x2="100%" y2="95.0633441%" id="background-gradient">
-          <stop stop-color="#49C3F6" offset="0%"></stop>
-          <stop stop-color="#00A7F7" offset="100%"></stop>
+          <stop stop-color="#05afff" offset="0%"></stop>
+          <stop stop-color="#009ce5" offset="100%"></stop>
         </linearGradient>
       </defs>
       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
