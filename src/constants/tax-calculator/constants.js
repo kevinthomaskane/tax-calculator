@@ -53,7 +53,7 @@ export const FEDERAL_TAX_BRACKETS = {
       max: 84200
     },
     MFJ: {
-      min: 78950,
+      min: 78951,
       max: 168400
     },
     MFS: {
@@ -156,19 +156,19 @@ export const MEDICARE_TAX_BRACKETS = {
   }
 }
 
-// don't have to pay SS tax on anything over 128400
+// don't have to pay SS tax on anything over 132900
 export const SOCIAL_SECURITY_TAX_BRACKETS = {
   'tier-1': {
     rate: .062,
     min: 0,
-    max: 128400,
+    max: 132900,
     cap: -1
   },
   'tier-2': {
     rate: .062,
-    min: 128401,
+    min: 132901,
     max: Infinity,
-    cap: 128400
+    cap: 132900
   }
 }
 

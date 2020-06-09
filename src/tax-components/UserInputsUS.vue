@@ -60,7 +60,6 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
 import { PAY_BASIS_OPTIONS, FILING_ACRONYMS, STATES } from './../constants/tax-calculator/constants'
 
 export default {
@@ -108,10 +107,12 @@ export default {
 
       const yearlyIncome = this.returnYearlyIncome(parseInt(this.income), this.payBasis)
 
-      this.$store.dispatch('setTaxYearlyGrossIncome', yearlyIncome)
-      this.$store.dispatch('setTaxPayBasis', this.payBasis)
-      this.$store.dispatch('setFilingStatus', this.filingStatus)
-      this.$store.dispatch('setStateOfResidence', this.stateOfResidence)
+      this.$store.dispatch('setUserTaxInfo', {
+        taxPayBasis: this.payBasis,
+        taxYearlyGrossIncome: yearlyIncome,
+        filingStatus: this.filingStatus,
+        stateOfResidence: this.stateOfResidence
+      })
     },
     /**
      * returns the yearly income based on the selected pay basis
@@ -135,11 +136,6 @@ export default {
           return income * 8 * 5 * 52
       }
     }
-  },
-  computed: {
-    ...mapGetters([
-      'taxYearlyGrossIncome'
-    ]),
   }
 }
 </script>

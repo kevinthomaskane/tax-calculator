@@ -8,41 +8,35 @@ export default new Vuex.Store({
   state: {
     country: 'US', /* either US or UK for pocketpence */
     calculatorType: 'tax', /* type of calculator to display */
-    taxYearlyGrossIncome: 50000, /* user-inputed gross income for tax calculator */
-    taxPayBasis: 'Yearly', /* user-inputed pay basiss for tax calculator */
-    filingStatus: 'S', /* user-inputed filing status S, MFJ, MFS, HOH */
-    stateOfResidence: 'Alabama' /* user-inputed state of residence */
+    userTaxInfo: {
+      taxYearlyGrossIncome: -1, /* user-inputed gross income for tax calculator */
+      taxPayBasis: '', /* user-inputed pay basiss for tax calculator */
+      filingStatus: '', /* user-inputed filing status S, MFJ, MFS, HOH */
+      stateOfResidence: '' /* user-inputed state of residence */
+    },
+    newPayBasis: '' /* user-selected from results section of calculator */
   },
   getters: {
     calculatorType: state => state.calculatorType,
-    taxYearlyGrossIncome: state => state.taxYearlyGrossIncome,
-    taxPayBasis: state => state.taxPayBasis,
+    userTaxInfo: state => state.userTaxInfo,
     country: state => state.country,
-    filingStatus: state => state.filingStatus,
-    stateOfResidence: state => state.stateOfResidence
+    newPayBasis: state => state.newPayBasis
   },
   mutations: {
     setCalculatorType (state, type) {
       state.calculatorType = type
     },
-    setTaxYearlyGrossIncome (state, income) {
-      state.taxYearlyGrossIncome = income  
+    setUserTaxInfo (state, info) {
+      console.log(info)
+      state.userTaxInfo = info
     },
-    setTaxPayBasis (state, basis) {
-      state.taxPayBasis = basis  
-    },
-    setFilingStatus (state, status) {
-      state.filingStatus = status  
-    },
-    setStateOfResidence (state, residence) {
-      state.stateOfResidence = residence  
+    setNewPayBasis (state, basis) {
+      state.newPayBasis = basis
     }
   },
   actions: {
     setCalculatorType ({commit}, payload) {commit('setCalculatorType', payload)},
-    setTaxYearlyGrossIncome ({commit}, payload) {commit('setTaxYearlyGrossIncome', payload)},
-    setTaxPayBasis ({commit}, payload) {commit('setTaxPayBasis', payload)},
-    setFilingStatus ({commit}, payload) {commit('setFilingStatus', payload)},
-    setStateOfResidence ({commit}, payload) {commit('setStateOfResidence', payload)},
+    setUserTaxInfo({commit}, payload) {commit('setUserTaxInfo', payload)},
+    setNewPayBasis({commit}, payload) {commit('setNewPayBasis', payload)},
   }
 })
