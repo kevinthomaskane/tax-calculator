@@ -27,7 +27,6 @@ export default new Vuex.Store({
       state.calculatorType = type
     },
     setUserTaxInfo (state, info) {
-      console.log(info)
       state.userTaxInfo = info
     },
     setNewPayBasis (state, basis) {

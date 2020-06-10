@@ -9,7 +9,7 @@
             name="gross income"
             id="gross-income-input"
             @input="handleGrossIncomeInput"
-            type="text"
+            type="number"
             :value="income"
           />
         </div>
@@ -68,7 +68,7 @@ export default {
     PAY_BASIS_OPTIONS,
     FILING_ACRONYMS,
     STATES,
-    income: '50000', /* user may input non-digits, so store as string to allow for sanitizing regex */
+    income: 50000, /* user may input non-digits, so store as string to allow for sanitizing regex */
     payBasis: 'Yearly',
     filingStatus: 'S',
     stateOfResidence: 'Alabama'
@@ -99,13 +99,10 @@ export default {
       this.stateOfResidence = e.target.value
     },
     /**
-     * Removes all non-digits from input and sets yearly income, payBasis, filingStatus, and stateOfResidence to store
+     * Calculates yearly income, payBasis, filingStatus, and stateOfResidence and sets to store
      */
     handleCalculate () {
-      const sanitized = this.income.replace(/\D/g, '')
-      this.income = sanitized
-
-      const yearlyIncome = this.returnYearlyIncome(parseInt(this.income), this.payBasis)
+      const yearlyIncome = this.returnYearlyIncome(parseFloat(this.income), this.payBasis)
 
       this.$store.dispatch('setUserTaxInfo', {
         taxPayBasis: this.payBasis,
